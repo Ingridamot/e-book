@@ -10,6 +10,6 @@ public class FirstController {
 
     @GetMapping("hello")
     public String sayHelloToCustomer(){
-        return "hello";
+        return "hello.html";
     }
 }
