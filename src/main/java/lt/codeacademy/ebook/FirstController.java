@@ -1,14 +1,34 @@
 package lt.codeacademy.ebook;
 
+import lt.codeacademy.ebook.product.Product;
+import lt.codeacademy.ebook.product.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class FirstController {
 
-    @GetMapping("/hello/{name}")
-    public String sayHelloToCustomer(@PathVariable String name, @RequestParam String surname){
-        System.out.println("Hello my name is " + name + " " + surname);
+    private ProductService productService;
+
+    @Autowired
+    public FirstController(ProductService productService) {
+        this.productService = productService;
+    }
+
+    @GetMapping("/products/create")
+    public String sayHelloToCustomer(Model model) {
+        model.addAttribute("product", new Product());
+        return "product";
+    }
+
+    @PostMapping("/products/create")
+    public String createAProduct(Product product) {
+
+        productService.saveProduct(product);
+        System.out.println("currently in the database");
+        productService.getAllProducts().forEach(System.out::println);
         return "hello";
     }
 }
