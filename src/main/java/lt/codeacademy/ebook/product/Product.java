@@ -2,6 +2,8 @@ package lt.codeacademy.ebook.product;
 
 import lombok.*;
 
+import java.util.UUID;
+
 @Builder
 @Getter
 @Setter
@@ -9,6 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class Product {
+    private UUID uuid;
     private String name;
     private double price;
     private int amount;
