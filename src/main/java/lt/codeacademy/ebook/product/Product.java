@@ -2,6 +2,7 @@ package lt.codeacademy.ebook.product;
 
 import lombok.*;
 
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor
