@@ -11,9 +11,10 @@ import java.util.UUID;
 @NoArgsConstructor
 @ToString
 public class Product {
-    private UUID uuid;
+    private UUID productId;
     private String name;
     private double price;
     private int amount;
 }
+
 
