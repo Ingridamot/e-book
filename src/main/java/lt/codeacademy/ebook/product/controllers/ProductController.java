@@ -1,11 +1,16 @@
-package lt.codeacademy.ebook.product;
+package lt.codeacademy.ebook.product.controllers;
 import java.util.List;
 import java.util.UUID;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.log4j.Log4j2;
 import lt.codeacademy.ebook.HttpEndpoints;
+import lt.codeacademy.ebook.product.Product;
+import lt.codeacademy.ebook.product.dto.ProductDto;
+import lt.codeacademy.ebook.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -38,26 +43,32 @@ public class ProductController {
     }
 
     @PostMapping(HttpEndpoints.PRODUCTS_CREATE)
-    public String createAProduct(Product product) {
+    public String createAProduct(Model model, Product product) {
         productService.saveProduct(product);
-        System.out.println("currently in the database");
-        productService.getAllProducts().forEach(System.out::println);
+        model.addAttribute("message", "Product added successfully!");
 
-        return "product/products";
+        return "product/product";
     }
 
     @PostMapping(HttpEndpoints.PRODUCTS_UPDATE)
-    public String updateProduct(Model model, Product product, @PathVariable UUID productId) {
+    public String updateProduct(Model model, Pageable pageable, Product product, @PathVariable UUID productId) {
         productService.updateProduct(product);
 
-        return getProducts(model);
+        return getProducts(model, pageable);
     }
 
     @GetMapping(HttpEndpoints.PRODUCTS)
-    public String getProducts(Model model) {
-        final List<Product> allProducts = productService.getAllProducts();
+    public String getProducts(Model model, @PageableDefault(size = 3) Pageable pageable) {
+        final Page<ProductDto> allProducts = productService.getAllProductsPage(pageable);
         model.addAttribute("productList", allProducts);
 
         return "product/products";
+    }
+
+    @GetMapping(HttpEndpoints.PRODUCTS_DELETE)
+    public String deleteProduct(Model model, Pageable pageable, @PathVariable UUID productId) {
+        productService.deleteProductByUUID(productId);
+
+        return getProducts(model, pageable);
     }
 }

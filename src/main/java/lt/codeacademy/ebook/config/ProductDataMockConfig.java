@@ -4,7 +4,7 @@ import com.github.javafaker.Faker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import lt.codeacademy.ebook.product.Product;
-import lt.codeacademy.ebook.product.ProductService;
+import lt.codeacademy.ebook.product.service.ProductService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,7 +25,7 @@ public class ProductDataMockConfig {
         while (MAX_COUNT >= count) {
             productService.saveProduct(
                     Product.builder()
-                            .name(faker.food().fruit())
+                            .name("(faker) " + faker.food().fruit())
                             .amount(faker.number().numberBetween(2, 99))
                             .price(faker.number().numberBetween(1, 100))
                             .build());
