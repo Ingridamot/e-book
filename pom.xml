@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>lt.codeacademy</groupId>
-	<artifactId>e-book</artifactId>
+	<artifactId>ebook</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>e-book</name>
+	<name>ebook</name>
 	<description>A demo project for codeacademy spring 2024</description>
 	<properties>
 		<java.version>17</java.version>
