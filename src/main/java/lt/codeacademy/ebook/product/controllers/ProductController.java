@@ -1,9 +1,10 @@
 package lt.codeacademy.ebook.product.controllers;
-import java.util.List;
 import java.util.UUID;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import lt.codeacademy.ebook.HttpEndpoints;
+import lt.codeacademy.ebook.helper.MessageService;
 import lt.codeacademy.ebook.product.Product;
 import lt.codeacademy.ebook.product.dto.ProductDto;
 import lt.codeacademy.ebook.product.service.ProductService;
@@ -18,20 +19,17 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @Log4j2
+@RequiredArgsConstructor
 public class ProductController {
 
-    private ProductService productService;
-
-    @Autowired
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
+    private final ProductService productService;
+    private final MessageService messageService;
 
     @GetMapping(HttpEndpoints.PRODUCTS_CREATE)
     public String getFormForCreate(Model model, String message) {
         log.atInfo().log("-==== get product on create ====-");
         model.addAttribute("product", Product.builder().build());
-        model.addAttribute("message", message);
+        model.addAttribute("message", messageService.getTranslatedMessage(message));
 
         return "product/product";
     }
@@ -48,7 +46,7 @@ public class ProductController {
     public String createAProduct(Model model, Product product) {
         productService.saveProduct(product);
 
-        return "redirect:/products/create?message=Product added successfully!";
+        return "redirect:/products/create?message=product.create.message.success";
     }
 
     @PostMapping(HttpEndpoints.PRODUCTS_UPDATE)
