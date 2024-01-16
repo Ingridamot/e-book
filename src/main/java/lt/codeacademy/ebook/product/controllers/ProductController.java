@@ -10,6 +10,7 @@ import lt.codeacademy.ebook.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,9 +28,10 @@ public class ProductController {
     }
 
     @GetMapping(HttpEndpoints.PRODUCTS_CREATE)
-    public String getFormForCreate(Model model) {
+    public String getFormForCreate(Model model, String message) {
         log.atInfo().log("-==== get product on create ====-");
         model.addAttribute("product", Product.builder().build());
+        model.addAttribute("message", message);
 
         return "product/product";
     }
@@ -45,9 +47,8 @@ public class ProductController {
     @PostMapping(HttpEndpoints.PRODUCTS_CREATE)
     public String createAProduct(Model model, Product product) {
         productService.saveProduct(product);
-        model.addAttribute("message", "Product added successfully!");
 
-        return "product/product";
+        return "redirect:/products/create?message=Product added successfully!";
     }
 
     @PostMapping(HttpEndpoints.PRODUCTS_UPDATE)
@@ -58,7 +59,8 @@ public class ProductController {
     }
 
     @GetMapping(HttpEndpoints.PRODUCTS)
-    public String getProducts(Model model, @PageableDefault(size = 3) Pageable pageable) {
+    public String getProducts(Model model,
+                              @PageableDefault(size = 5, sort = {"price"}, direction = Sort.Direction.ASC) Pageable pageable) {
         final Page<ProductDto> allProducts = productService.getAllProductsPage(pageable);
         model.addAttribute("productList", allProducts);
 

@@ -23,11 +23,11 @@ public class ProductService {
         this.productDao = productDao;
         this.mapper = mapper;
     }
-
+    @Transactional
     public void saveProduct(Product product) {
         productDao.save(product);
     }
-
+    @Transactional
     public void updateProduct(Product product) {
         productDao.update(product);
     }
