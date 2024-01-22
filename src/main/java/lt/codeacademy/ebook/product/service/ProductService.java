@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -23,11 +22,12 @@ public class ProductService {
         this.productDao = productDao;
         this.mapper = mapper;
     }
-    @Transactional
-    public void saveProduct(Product product) {
+
+    public void saveProduct(ProductDto productDto) {
+        var product = mapper.fromProductDto(productDto);
         productDao.save(product);
     }
-    @Transactional
+
     public void updateProduct(Product product) {
         productDao.update(product);
     }
@@ -39,7 +39,7 @@ public class ProductService {
     public ProductDto getProductByUUID(UUID id) {
         return mapper.toProductDto(productDao.getProductByUUID(id));
     }
-    @Transactional
+
     public void deleteProductByUUID(UUID id) {
         productDao.deleteProductByUUID(id);
     }
