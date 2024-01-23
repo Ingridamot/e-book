@@ -1,17 +1,16 @@
 package lt.codeacademy.ebook.product.dao;
 
-import lt.codeacademy.ebook.product.Product;
+import lt.codeacademy.ebook.product.pojo.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    @Query("select p from Product p where productId = ?1")
-    Product findByProductId(UUID id);
+    Optional<Product> findByProductId(UUID id);
 
     void deleteProductByProductId(UUID id);
 }

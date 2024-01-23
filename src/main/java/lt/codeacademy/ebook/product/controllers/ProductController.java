@@ -6,10 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import lt.codeacademy.ebook.HttpEndpoints;
 import lt.codeacademy.ebook.helper.MessageService;
-import lt.codeacademy.ebook.product.Product;
 import lt.codeacademy.ebook.product.dto.ProductDto;
 import lt.codeacademy.ebook.product.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -17,7 +15,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @Log4j2
@@ -56,8 +56,8 @@ public class ProductController {
     }
 
     @PostMapping(HttpEndpoints.PRODUCTS_UPDATE)
-    public String updateProduct(Model model, Pageable pageable, Product product, @PathVariable UUID productId) {
-        productService.updateProduct(product);
+    public String updateProduct(Model model, Pageable pageable, ProductDto productDto, @PathVariable UUID productId) {
+        productService.updateProduct(productDto);
 
         return getProducts(model, pageable);
     }

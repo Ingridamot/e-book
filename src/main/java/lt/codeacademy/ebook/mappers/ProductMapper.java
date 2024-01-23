@@ -1,6 +1,6 @@
 package lt.codeacademy.ebook.mappers;
 
-import lt.codeacademy.ebook.product.Product;
+import lt.codeacademy.ebook.product.pojo.Product;
 import lt.codeacademy.ebook.product.dto.ProductDto;
 import org.springframework.stereotype.Component;
 
