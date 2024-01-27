@@ -3,6 +3,7 @@ package lt.codeacademy.ebook.product.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,4 +23,7 @@ public class ProductDto {
     @Positive(message = "{productdto.positive}")
     @NotNull
     private int amount;
+    @NotNull
+    @Size
+    private Long categoryId;
 }

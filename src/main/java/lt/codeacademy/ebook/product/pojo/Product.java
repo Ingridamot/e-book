@@ -1,5 +1,6 @@
 package lt.codeacademy.ebook.product.pojo;
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -27,6 +28,6 @@ public class Product {
     private BigDecimal price;
     private int amount;
 
-    @ManyToMany
-    private Set<ProductCategory> productCategories;
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    private Set<ProductCategory> productCategories = new HashSet<>();
 }
